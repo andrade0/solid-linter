@@ -69,6 +69,6 @@ Please Feel free to contribute to this project by submitting a pull request. If 
 
 # Donate <img width="20" height="20" src="https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/512/Ethereum-ETH-icon.png">
 
-If you find this project useful, please consider donating to support further development in my Ethereum wallet ( 0xAE89a36c5875781781cBD35f78EA7CE6506787D1 ) 
+If you find this project useful, please consider donating to support further development in my <br />Ethereum wallet ( 0xAE89a36c5875781781cBD35f78EA7CE6506787D1 ) 
 
 
