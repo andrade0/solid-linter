@@ -1,5 +1,5 @@
 {
-  "name": "solid-linter",
+  "name": "ts-solid-linter",
   "repository": "https://github.com/andrade0/solid-linter.git",
   "function": "solidLint",
   "author": "Olivier Andrade <andradeolivier@gmail.com>",
@@ -7,9 +7,7 @@
   "description": "Code quality tool for Solid Principles in Typescript",
   "main": "./dist/cli.ts",
   "scripts": {
-    "build": "tsc",
-    "start": "yarn build && yarn lint && yarn build",
-    "lint": "/Users/andrade/Downloads/solid-parser/dist/cli.js"
+    "build": "tsc"
   },
   "bin": {
     "solidLint": "./dist/cli.js"

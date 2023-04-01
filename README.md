@@ -1,6 +1,6 @@
 <div align="center"><img src="https://res.cloudinary.com/dhgmytqop/image/upload/v1680367017/solid-linter_fuhl1b.png" alt="Solid Linter" title="Solid Linter" width="400" height="400" /></div>
 
-Introducing solid-linter - a powerful TypeScript linter designed to detect and report violations of the __SOLID principles__ in your TypeScript codebase. SOLID is an acronym representing a set of five design principles that, when adhered to, make software more understandable, flexible, and maintainable. These principles are:
+Introducing ts-solid-linter - a powerful TypeScript linter designed to detect and report violations of the __SOLID principles__ in your TypeScript codebase. SOLID is an acronym representing a set of five design principles that, when adhered to, make software more understandable, flexible, and maintainable. These principles are:
 
 - Single Responsibility Principle (SRP) [Todo]
 - Open/Closed Principle (OCP)
@@ -8,7 +8,7 @@ Introducing solid-linter - a powerful TypeScript linter designed to detect and r
 - Interface Segregation Principle (ISP)
 - Dependency Inversion Principle (DIP)
 
-solid-linter seamlessly integrates with your existing TypeScript projects and provides customizable rules that help enforce SOLID principles in your code. By using this linter, you can ensure that your application follows best practices and remains maintainable as it grows in complexity.
+ts-solid-linter seamlessly integrates with your existing TypeScript projects and provides customizable rules that help enforce SOLID principles in your code. By using this linter, you can ensure that your application follows best practices and remains maintainable as it grows in complexity.
 
 ## Features:
 
@@ -22,9 +22,9 @@ With ts-solid-linter, you can effortlessly maintain high-quality code and preven
 
 ## Installation
 ```
-yarn add -D solid-linter
+yarn add -D ts-solid-linter
 or
-npm i --save-dev solid-linter
+npm i --save-dev ts-solid-linter
 ```
 
 
@@ -54,7 +54,7 @@ or
 ```
 Add the following to your package.json file :
 "scripts": {
-  "solid-linter": "solidLint"
+  "ts-solid-linter": "solidLint"
 }
 ```
 
