@@ -72,7 +72,7 @@ if(config && config.src) {
     log(green(`Your project follows all Solid Principles`));
   } else {
     log(`Your project breaks some Solid Principles, ${red(errorCount)} errors has been found`);
-    process.exit();
+    process.exit(1);
   }
 
 }
