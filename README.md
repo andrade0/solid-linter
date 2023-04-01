@@ -1,6 +1,6 @@
 <div align="center"><img src="https://res.cloudinary.com/dhgmytqop/image/upload/v1680367017/solid-linter_fuhl1b.png" alt="Solid Linter" title="Solid Linter" width="400" height="400" /></div>
 
-Introducing ts-solid-linter - a powerful TypeScript linter designed to detect and report violations of the __SOLID principles__ in your TypeScript codebase. SOLID is an acronym representing a set of five design principles that, when adhered to, make software more understandable, flexible, and maintainable. These principles are:
+Introducing __ts-solid-linter__ - a powerful TypeScript linter designed to detect and report violations of the __SOLID principles__ in your TypeScript codebase. SOLID is an acronym representing a set of five design principles that, when adhered to, make software more understandable, flexible, and maintainable. These principles are:
 
 - Single Responsibility Principle (SRP) [Todo]
 - Open/Closed Principle (OCP)
