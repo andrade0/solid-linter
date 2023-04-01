@@ -65,7 +65,7 @@ Please Feel free to contribute to this project by submitting a pull request. If 
 <br />
 <br />
 
-<img src="https://png.pngtree.com/png-vector/20191024/ourmid/pngtree-online-donation-icon-outline-style-png-image_1855475.jpg" height="100" width="150">
+<img src="https://png.pngtree.com/png-vector/20191024/ourmid/pngtree-online-donation-icon-outline-style-png-image_1855475.jpg" height="100" width="100">
 
 # Donate <img width="20" height="20" src="https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/512/Ethereum-ETH-icon.png">
 
