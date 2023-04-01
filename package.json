@@ -1,0 +1,32 @@
+{
+  "name": "solid-parser",
+  "author": "Andrade <andradeolivier@gmail.com>",
+  "version": "1.0.0",
+  "description": "Code quality tool for Solid Principles in Typescript",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build && yarn lint",
+    "lint": "/Users/andrade/Downloads/solid-parser/dist/cli.js"
+  },
+  "bin": {
+    "solidLint": "./dist/cli.js"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "bin",
+    "lib"
+  ],
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "@types/cli-color": "^2.0.2",
+    "@types/node": "^18.15.10",
+    "@types/yargs": "^17.0.24",
+    "class-transformer": "^0.5.1",
+    "cli-color": "^2.0.3",
+    "typescript": "^5.0.2",
+    "yargs": "^17.7.1"
+  }
+}
