@@ -2,6 +2,7 @@
   "name": "ts-solid-linter",
   "repository": "https://github.com/andrade0/solid-linter.git",
   "function": "solidLint",
+  "homepage": "solidparser.com",
   "author": "Olivier Andrade <andradeolivier@gmail.com>",
   "version": "1.0.0",
   "description": "Code quality tool for Solid Principles in Typescript",

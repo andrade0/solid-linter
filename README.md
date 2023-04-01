@@ -71,4 +71,7 @@ Please Feel free to contribute to this project by submitting a pull request. If 
 
 If you find this project useful, please consider donating to support further development in my <br />Ethereum wallet ( 0xAE89a36c5875781781cBD35f78EA7CE6506787D1 ) 
 
+## Exemple of output
 
+<img src="https://res.cloudinary.com/dhgmytqop/image/upload/v1680371829/Capture_d_e%CC%81cran_2023-04-01_a%CC%80_18.56.49_o6je1e.png">
+<img src="https://res.cloudinary.com/dhgmytqop/image/upload/v1680371829/Capture_d_e%CC%81cran_2023-04-01_a%CC%80_18.56.18_rtfo6n.png">
