@@ -38,6 +38,14 @@
     "open/close principle",
     "liskov substitution principle",
     "interface segregation principle",
-    "dependency inversion principle"
+    "dependency inversion principle",
+    "eslint",
+    "linter",
+    "lint",
+    "sonar",
+    "code quality",
+    "quality",
+    "clean code",
+    "clean architecture"
   ]
 }
