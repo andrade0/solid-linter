@@ -25,6 +25,8 @@ export const dip = ({
 
   let errorsCount: number = 0;
 
+  const errorsShown: string[] = [];
+
   classes.forEach((_class: Classse) => {
     const methods: ClasseMethod[] = _class.methods;
     methods.forEach((method: ClasseMethod) => {
@@ -38,18 +40,26 @@ export const dip = ({
           const className: string = item.type;
           const variableName: string = item.variableName;
           if(stringClassNames.includes(className)) {
-            log(`Class "${red(_class.name)}" may breaks ${white('dependencies inversion Principle')} because method "${red(method.name)}" creates a "${red('new')}" instance of class "${red(className)}" in property "${red(variableName)}" instead of using ${blue('injection')} on file: ${file(_class.fileUri)}`);
-            log('');
-            errorsCount++;
+            const errorToshow = `Class "${red(_class.name)}" may breaks ${white('dependencies inversion Principle')} because method "${red(method.name)}" creates a "${red('new')}" instance of class "${red(className)}" in property "${red(variableName)}" instead of using ${blue('injection')} on file: ${file(_class.fileUri)}`;
+            if(!errorsShown.includes(errorToshow)) {
+              log(errorToshow);
+              errorsShown.push(errorToshow);
+              log('');
+              errorsCount++;
+            }
           }
         });
       }
 
       _class.injecteds.forEach((dependency: string) => {
         if(stringClassNames.includes(dependency) && !stringInterfaceNames.includes(dependency)) {
-          log(`Class "${red(_class.name)}" breaks ${white('dependencies inversion Principle')} because class has injection of a ${blue('non abstract dependency')}: ${red(dependency)} on file: ${file(_class.fileUri)}`);
-          log('');
-          errorsCount++;
+          const errorToshow = `Class "${red(_class.name)}" breaks ${white('dependencies inversion Principle')} because class has injection of a ${blue('non abstract dependency')}: ${red(dependency)} on file: ${file(_class.fileUri)}`;
+          if(!errorsShown.includes(errorToshow)) {
+            log(errorToshow);
+            errorsShown.push(errorToshow);
+            log('');
+            errorsCount++;
+          }
         }
       });
     });

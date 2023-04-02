@@ -102,6 +102,14 @@ export const getRuntime = (folderPath: string): SolidRuntime => {
     return item.name;
   });
 
+  const abstractClassesNames: string[] = finalClasses.filter((_class: Classse) => {
+    if(_class.modifiers.includes('abstract')) {
+      return true;
+    }
+  }).map((_class: Classse) => {
+    return _class.name;
+  });
+
   return {
     classes: finalClasses,
     interfaces: finalInterfaces,
@@ -109,7 +117,7 @@ export const getRuntime = (folderPath: string): SolidRuntime => {
     classesThatsHaveDerivedClasses,
     classesThatsHaveDerivedClassesNames,
     stringClassNames,
-    stringInterfaceNames
+    stringInterfaceNames: [...stringInterfaceNames, ...abstractClassesNames]
   } as SolidRuntime;
 }
 

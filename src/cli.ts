@@ -9,6 +9,7 @@ import {isp} from "./isp";
 import {dip} from "./dip";
 import {getRuntime} from "./lib/helpers/getRuntime";
 import {green, log, red} from "./constants";
+import {SolidRuntime} from "./lib/types/solidRuntime";
 
 interface SolidLintConfig {
   src: string;
@@ -48,7 +49,7 @@ if(config && config.src) {
   const runIsp: boolean = runIspFromConfig === 'on';
   const runDip: boolean = runDipFromConfig === 'on';
 
-  const runtime = getRuntime(folderPath);
+  const runtime: SolidRuntime = getRuntime(folderPath);
 
   let errorCount = 0;
 
