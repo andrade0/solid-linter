@@ -30,7 +30,7 @@ npm i --save-dev ts-solid-linter
 
 ## Usage
 
-Create a .solidrc.json file in the root of your project and add the following:
+Create a .solidLint.json file in the root of your project and add the following:
 ```
 {
   "src": "your-src-folder",
@@ -54,7 +54,7 @@ or
 ```
 Add the following to your package.json file :
 "scripts": {
-  "ts-solid-linter": "solidLint"
+  "solidLint": "solidLint"
 }
 ```
 
