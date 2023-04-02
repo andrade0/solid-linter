@@ -4,7 +4,7 @@
   "function": "solidLint",
   "homepage": "solidparser.com",
   "author": "Olivier Andrade <andradeolivier@gmail.com>",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Code quality tool for Solid Principles in Typescript",
   "main": "./dist/cli.ts",
   "scripts": {

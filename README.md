@@ -34,10 +34,10 @@ Create a .solidLint.json file in the root of your project and add the following:
 ```
 {
   "src": "your-src-folder",
-  "ocp": "on", // on/off
-  "lsp": "on", // on/off
-  "isp": "on", // on/off
-  "dip": "on"  // on/off
+  "ocp": "on",
+  "lsp": "on",
+  "isp": "on",
+  "dip": "on" 
 }
 ```
 
