@@ -13,7 +13,11 @@ export class InterfaceClass {
   interfaceDeclaration: ts.InterfaceDeclaration;
   parsedObject: any;
   extendsObj: InterfaceClass[] = [];
-  constructor(data: InterfaceDeclarationWithSourceFile) {
+  classesNames: string[];
+  interfacesNames: string[];
+  constructor(data: InterfaceDeclarationWithSourceFile, classesNames: string[], interfacesNames: string[]) {
+    this.classesNames = classesNames;
+    this.interfacesNames = interfacesNames;
     this.sourceFile = data.sourceFile;
     this.interfaceDeclaration = data.interfaceDeclaration;
     this.parsedObject = JSON.parse(safeStringify(data.interfaceDeclaration));

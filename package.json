@@ -8,7 +8,8 @@
   "description": "Code quality tool for Solid Principles in Typescript",
   "main": "./dist/cli.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "debug": "yarn build && ./dist/cli.js"
   },
   "bin": {
     "solidLint": "./dist/cli.js"

@@ -23,8 +23,12 @@ export class Classse {
   parsedObject: any;
   extendsObj: Classse[] = [];
   implementsObj: InterfaceClass[] = [];
+  classesNames: string[];
+  interfacesNames: string[];
 
-  constructor(data: ClassDeclarationWithSourceFile) {
+  constructor(data: ClassDeclarationWithSourceFile, classesNames: string[], interfacesNames: string[]) {
+    this.classesNames = classesNames;
+    this.interfacesNames = interfacesNames;
     this.sourceFile = data.sourceFile;
     this.classDeclaration = data.classDeclaration;
     this.parsedObject = JSON.parse(safeStringify(data.classDeclaration));
@@ -66,11 +70,17 @@ export class Classse {
               newProperty.defaultValueIsNewInstanceOfObject = true;
             }
           }
-
           if (property.modifiers && property.modifiers.length > 0) {
             newProperty.modifiers = parseModifier(property.modifiers);
             newProperty.isInjectedObject = parseIsInjectedObject(property.modifiers);
           }
+
+          if(this.classesNames.includes(newProperty.type) || this.interfacesNames.includes(newProperty.type)) {
+            newProperty.isInjectedObject = true;
+          } else {
+            newProperty.isInjectedObject = newProperty.isInjectedObject;
+          }
+
           properties.push(newProperty);
         }
       });
@@ -78,13 +88,19 @@ export class Classse {
 
     const propertiesFromConstructor: any = this.methods.find((method: InterfaceMethod) => method.name === "constructor")?.parameters.filter((parameter: any) => parameter.modifiers.length > 0);
 
+    // console.log('propertiesFromConstructor', propertiesFromConstructor);
+
     if (propertiesFromConstructor && propertiesFromConstructor.length > 0) {
       propertiesFromConstructor.forEach((parameter: Parameter) => {
         const _newProperty: ClassProperty = new ClassProperty();
         _newProperty.name = parameter.name;
         _newProperty.type = parameter.type;
         _newProperty.modifiers = parameter.modifiers;
-        _newProperty.isInjectedObject = parameter.isInjectedObject;
+        if(this.classesNames.includes(_newProperty.type) || this.interfacesNames.includes(_newProperty.type)) {
+          _newProperty.isInjectedObject = true;
+        } else {
+          _newProperty.isInjectedObject = parameter.isInjectedObject;
+        }
         if (parameter.defaultValue) {
           _newProperty.defaultValue = parameter.defaultValue;
           if (parameter.defaultValueIsNewInstanceOfObject) {

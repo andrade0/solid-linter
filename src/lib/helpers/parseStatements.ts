@@ -1,7 +1,7 @@
 import {CodeStatement} from "../classes/CodeStatement.class";
 import * as ts from "typescript";
 import {CodeExpression} from "../classes/codeExpression";
-import {debugJson, safeStringify, typescriptApiObjectReplaceKinds} from "./index";
+import {typescriptApiObjectReplaceKinds} from "./index";
 
 export const parseStatements = (statements: any): CodeStatement[] => {
   const codeStatements: CodeStatement[] = [];
@@ -36,7 +36,6 @@ export const parseStatement = (statement: any, isThanStatement: boolean = false)
         return argumentValue;
       }
     });
-    // console.log(codeStatement.code);
   } else if (statement.kind === 'ReturnStatement') {
     codeStatement.type = 'return';
     if (statement.expression && statement.expression.kind === 'Identifier') {
@@ -46,34 +45,21 @@ export const parseStatement = (statement: any, isThanStatement: boolean = false)
     }
     codeStatement.name = '';
     codeStatement.arguments = [];
-    // console.log(codeStatement.code);
   } else if (statement.kind === 'IfStatement') {
-    // console.log('DEBUG', statement);
     codeStatement.type = 'if';
     if (statement.expression.kind === 'BinaryExpression') {
       codeStatement.name = statement.expression.operatorToken.kind;
       codeStatement.type = statement.expression.left.escapedText;
       codeStatement.value = statement.expression.right.text;
-    } else {
-     /* codeStatement.name = statement.expression.operatorToken.kind;
-      codeStatement.type = statement.expression.left.escapedText;
-      codeStatement.value = statement.expression.right.text;*/
     }
-
-    /*if (statement.expression.right.kind === 'StringLiteral') {
-      codeStatement.value = `'${statement.expression.right.text}'`;
-    }*/
 
     if (codeStatement.name === 'EqualsEqualsEqualsToken') {
       codeStatement.name = '==='
     }
 
-    // console.log(codeStatement.code);
   } else if (statement.kind === 'SwitchStatement') {
     // console.log(statement);
   }
-
-
   codeStatement.expression = parseExpression(statement.expression);
 
   if (statement.thenStatement) {
@@ -96,8 +82,6 @@ export const parseExpression = (expression: any): CodeExpression | undefined => 
     return undefined;
   }
 
-  // console.log(safeStringify(expression));
-
   const codeExpression = new CodeExpression();
   const kind = ts.SyntaxKind[expression.kind];
   const left = expression.left ? expression.left.escapedText : undefined;
@@ -107,7 +91,6 @@ export const parseExpression = (expression: any): CodeExpression | undefined => 
   codeExpression.kind = kind;
   codeExpression.value = value;
   codeExpression.left = left;
-  // console.log('left', codeExpression.left);
   codeExpression.right = right;
   codeExpression.operator = operator;
   codeExpression.tsObject = expression as ts.Expression;
@@ -119,23 +102,10 @@ export const parseExpression = (expression: any): CodeExpression | undefined => 
     const expressionKind = ts.SyntaxKind[expression.expression.kind];
     codeExpression.kind = expressionKind;
   } else if (kind === 'BinaryExpression') {
-    // const expressionKind = ts.SyntaxKind[expression.kind];
-    // console.log(expressionKind);
-    // const expressionKind = ts.SyntaxKind[expression.expression.kind];
-    // codeExpression.kind = expressionKind;
   } else if (kind === 'NewExpression') {
-    //const expressionKind = ts.SyntaxKind[expression.kind];
-    const expressionKind = ts.SyntaxKind[expression.expression.kind];
-    //console.log(expression.expression);
+
     codeExpression.kind = expression.expression.escapedText;
-    // console.log(expressionKind);
-    // const expressionKind = ts.SyntaxKind[expression.expression.kind];
-    // codeExpression.kind = expressionKind;
   } else {
-    // console.log(kind);
-    // console.log('expression', expression, kind);
-    //const expressionKind = ts.SyntaxKind[expression.expression.kind];
-    //codeExpression.kind = expressionKind;
   }
   return codeExpression;
 }
@@ -152,11 +122,6 @@ export const parseDeclarationList = (declarationList: any): CodeStatement => {
       codeStatement.expression = new CodeExpression();
       codeStatement.expression.kind = ts.SyntaxKind[declaration.kind];
       codeStatement.expression.value = declaration.name.escapedText;
-      // codeStatement.expression.right = declaration.initializer.expression.escapedText;
-      // console.log('----');
-      // console.log('----');
-      // console.log('----');
-      // console.log('declaration', declaration);
     });
   }
 

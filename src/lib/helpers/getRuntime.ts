@@ -9,9 +9,17 @@ export const getRuntime = (folderPath: string): SolidRuntime => {
 
   const {interfaces, classes, functions} = getAllClassesAndInterfacesAndFunctions(folderPath);
 
+  const classesNames: string[] = classes.map((_class: ClassDeclarationWithSourceFile) => {
+    return _class.classDeclaration.name?.escapedText.toString() || '';
+  });
+
+  const interfacesNames: string[] = interfaces.map((_interface: InterfaceDeclarationWithSourceFile) => {
+    return _interface.interfaceDeclaration.name?.escapedText.toString() || '';
+  });
+
   let finalInterfaces: InterfaceClass[] = [];
   interfaces.forEach((item: InterfaceDeclarationWithSourceFile) => {
-    finalInterfaces.push(new InterfaceClass(item));
+    finalInterfaces.push(new InterfaceClass(item, classesNames, interfacesNames));
   });
 
   finalInterfaces = finalInterfaces.map((_interface: InterfaceClass) => {
@@ -33,7 +41,7 @@ export const getRuntime = (folderPath: string): SolidRuntime => {
 
   let finalClasses: Classse[] = [];
   classes.forEach((item: ClassDeclarationWithSourceFile) => {
-    finalClasses.push(new Classse(item));
+    finalClasses.push(new Classse(item, classesNames, interfacesNames));
   });
 
 

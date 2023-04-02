@@ -1,5 +1,4 @@
 import {SourceFile as SourceFileType} from "typescript";
-// import {folderPath, program} from "../../constants";
 import {
   ClassDeclarationWithSourceFile,
   getClassesDeclarationsFromSourceFileObject, getFilesFromPaths,
