@@ -19,7 +19,7 @@ export const lsp = ({
   console.log('');
   console.log('-------------------------------------');
   console.log('-------------------------------------');
-  console.log('----LISKOV SUBSTITUTION PRINCIPLE----');
+  console.log('----'+blue('LISKOV SUBSTITUTION PRINCIPLE')+'----');
   console.log('-------------------------------------');
   console.log('-------------------------------------');
 

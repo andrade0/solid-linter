@@ -19,7 +19,7 @@ export const isp = ({
   console.log('');
   console.log('-------------------------------------');
   console.log('-------------------------------------');
-  console.log('---INTERFACE SEGREGATION PRINCIPLE---');
+  console.log('---'+blue('INTERFACE SEGREGATION PRINCIPLE')+'---');
   console.log('-------------------------------------');
   console.log('-------------------------------------');
 

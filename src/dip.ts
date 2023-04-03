@@ -19,7 +19,7 @@ export const dip = ({
   console.log('');
   console.log('-------------------------------------');
   console.log('-------------------------------------');
-  console.log('----DEPENDENCY INVERSION PRINCIPLE---');
+  console.log('----'+blue('DEPENDENCY INVERSION PRINCIPLE')+'---');
   console.log('-------------------------------------');
   console.log('-------------------------------------');
 
@@ -40,7 +40,7 @@ export const dip = ({
           const className: string = item.type;
           const variableName: string = item.variableName;
           if(stringClassNames.includes(className)) {
-            const errorToshow = `Class "${red(_class.name)}" may breaks ${white('dependencies inversion Principle')} because method "${red(method.name)}" creates a "${red('new')}" instance of class "${red(className)}" in property "${red(variableName)}" instead of using ${blue('injection')} on file: ${file(_class.fileUri)}`;
+            const errorToshow = `Class "${red(_class.name)}" breaks ${white('dependencies inversion Principle')} because method "${red(method.name)}" creates a "${red('new')}" instance of class "${red(className)}" in property "${red(variableName)}" instead of using ${blue('injection')} on file: ${file(_class.fileUri)}`;
             if(!errorsShown.includes(errorToshow)) {
               log(errorToshow);
               errorsShown.push(errorToshow);

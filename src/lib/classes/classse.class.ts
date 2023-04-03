@@ -207,7 +207,8 @@ export class Classse {
   methodParametersOrClassPropertiesUsedInSwitchOrIfStatement(methodName: string): variablesNamesOnSwitchOrIf[] {
     const method: ClasseMethod | undefined = this.methods.find((method: ClasseMethod) => method.name === methodName);
     if(method !== undefined) {
-      const classPropertiesNames = this.properties.map((property: ClassProperty) => property.name);
+      // const classPropertiesNames = this.properties.map((property: ClassProperty) => property.name);
+      const classPropertiesNames: string[] = [];
       const methodParametersNames = method.parameters.map((parameter: Parameter) => parameter.name);
       const candidateVariables = [...classPropertiesNames, ...methodParametersNames];
       const sourceFile = ts.createSourceFile('sample.ts', fs.readFileSync(this.fileUri, {encoding: "utf-8"}), ts.ScriptTarget.Latest, true);
