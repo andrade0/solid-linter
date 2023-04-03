@@ -207,10 +207,10 @@ export class Classse {
   methodParametersOrClassPropertiesUsedInSwitchOrIfStatement(methodName: string): variablesNamesOnSwitchOrIf[] {
     const method: ClasseMethod | undefined = this.methods.find((method: ClasseMethod) => method.name === methodName);
     if(method !== undefined) {
-      // const classPropertiesNames = this.properties.map((property: ClassProperty) => property.name);
-      const classPropertiesNames: string[] = [];
-      const methodParametersNames = method.parameters.map((parameter: Parameter) => parameter.name);
-      const candidateVariables = [...classPropertiesNames, ...methodParametersNames];
+      const classPropertiesNames: string[] = this.properties.map((property: ClassProperty) => property.name);
+      // const classPropertiesNames: string[] = [];
+      const methodParametersNames: string[] = method.parameters.map((parameter: Parameter) => parameter.name);
+      const candidateVariables: string[] = [...classPropertiesNames, ...methodParametersNames];
       const sourceFile = ts.createSourceFile('sample.ts', fs.readFileSync(this.fileUri, {encoding: "utf-8"}), ts.ScriptTarget.Latest, true);
       let variablesUsedInSwitchOrIf: variablesNamesOnSwitchOrIf[] = this.findTestedVariableInIfElseOrSwitch(sourceFile, this.name, methodName);
       return variablesUsedInSwitchOrIf.filter((item: variablesNamesOnSwitchOrIf) => candidateVariables.includes(item.variableName));
