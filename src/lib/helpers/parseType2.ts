@@ -92,6 +92,9 @@ export const parseReturnType = (className: string, methodName: string, typeobj: 
             returnType.type = parseType2(typeArgument.elementType);
             returnType.isGeneric = methodGenericTypes.includes(returnType.type.replace('[]', ''));
           }
+        } else {
+          returnType.type = ts.SyntaxKind[typeArgument.kind].replace('Keyword', '').toLowerCase();
+          returnType.isGeneric = methodGenericTypes.includes(returnType.type.replace('[]', ''));
         }
       });
     }
@@ -124,15 +127,7 @@ export const parseReturnType = (className: string, methodName: string, typeobj: 
       returnType.type = ts.SyntaxKind[typeobj.kind].replace('Keyword', '').toLowerCase();
       returnType.isGeneric = methodGenericTypes.includes(returnType.type.replace('[]', ''));
     }
-
-    // if(className === 'AbstractAbilitiesService' && methodName === 'assertUserOwns') {
-    //   console.log('kind', ts.SyntaxKind[typeobj.kind]);
-    // }
   }
-
-  // if(className === 'AbstractAbilitiesService' && methodName === 'assertUserOwns') {
-  //   console.log('DEBUG', returnType, returnType.toString());
-  // }
 
   return returnType;
 }

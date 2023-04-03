@@ -205,35 +205,13 @@ export class Classse {
   }
 
   methodParametersOrClassPropertiesUsedInSwitchOrIfStatement(methodName: string): variablesNamesOnSwitchOrIf[] {
-
     const method: ClasseMethod | undefined = this.methods.find((method: ClasseMethod) => method.name === methodName);
-
     if(method !== undefined) {
-
       const classPropertiesNames = this.properties.map((property: ClassProperty) => property.name);
       const methodParametersNames = method.parameters.map((parameter: Parameter) => parameter.name);
-
       const candidateVariables = [...classPropertiesNames, ...methodParametersNames];
-
       const sourceFile = ts.createSourceFile('sample.ts', fs.readFileSync(this.fileUri, {encoding: "utf-8"}), ts.ScriptTarget.Latest, true);
-
       let variablesUsedInSwitchOrIf: variablesNamesOnSwitchOrIf[] = this.findTestedVariableInIfElseOrSwitch(sourceFile, this.name, methodName);
-
-      /*const switchStatements = this.findSwitchStatements(sourceFile, this.name, methodName);
-      switchStatements.forEach((switchStatement: ts.SwitchStatement) => {
-        const testedVariable = switchStatement.expression;
-        variablesUsedInSwitchOrIf.push({variableName: testedVariable.getText(), ifOrSwitch: 'SWITCH'});
-      });*/
-
-      /*const testedVariables = this.findTestedVariableInIfElseOrSwitch(sourceFile, this.name, methodName);
-      testedVariables.forEach((variable: any) => {
-        if(variable !== undefined && variable.text !== undefined) {
-          variablesUsedInSwitchOrIf.push({variableName: variable.text, ifOrSwitch: 'IF'});
-        } else if(variable !== undefined) {
-          variablesUsedInSwitchOrIf.push({variableName: variable, ifOrSwitch: 'IF'});
-        }
-      });*/
-
       return variablesUsedInSwitchOrIf.filter((item: variablesNamesOnSwitchOrIf) => candidateVariables.includes(item.variableName));
     }
     return [];

@@ -25,6 +25,8 @@ export const isp = ({
 
   let errorsCount: number = 0;
 
+  const errorsShown: string[] = [];
+
   interfaces.forEach((item: InterfaceClass) => {
     const interfaceName = item.name;
     const classesThatImplementsThisInterface: Classse[] = classes.filter((_class: Classse) => {
@@ -51,9 +53,13 @@ export const isp = ({
         }
       });
       if(methodsNotImplemented.length > 0) {
-        log(`Interface "${red(interfaceName)}" breaks ${white('Interface Segregation Principle')} because Class "${red(classThatImplementsThisInterface.name)}" implements "${red(interfaceName)}" but ${blue('do not implements')} the following methods : ${red(methodsNotImplemented.join(', '))} \n${file('File:')} ${file(classThatImplementsThisInterface.fileUri)}`);
-        log('');
-        errorsCount++;
+        const errorToshow = `Interface "${red(interfaceName)}" breaks ${white('Interface Segregation Principle')} because Class "${red(classThatImplementsThisInterface.name)}" implements "${red(interfaceName)}" but ${blue('do not implements')} the following methods : ${red(methodsNotImplemented.join(', '))} \n${file('File:')} ${file(classThatImplementsThisInterface.fileUri)}`;
+        if(!errorsShown.includes(errorToshow)) {
+          log(errorToshow);
+          log('');
+          errorsShown.push(errorToshow);
+          errorsCount++;
+        }
       }
     });
   });

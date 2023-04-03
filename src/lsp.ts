@@ -60,11 +60,11 @@ export const lsp = ({
               const parentClassReturnIsGeneric = parentClassMethod.type.isGeneric;
               const parentClassReturnIsComposedType = parentClassMethod.type.isComposedType;
 
-              const childClassReturnType = parentClassMethod.type.type;
-              const childClassReturnIsPromise = parentClassMethod.type.isPromise;
-              const childClassReturnIsArray = parentClassMethod.type.isArray;
-              const childClassReturnIsGeneric = parentClassMethod.type.isGeneric;
-              const childClassReturnIsComposedType = parentClassMethod.type.isComposedType;
+              const childClassReturnType = childClassMethod.type.type;
+              const childClassReturnIsPromise = childClassMethod.type.isPromise;
+              const childClassReturnIsArray = childClassMethod.type.isArray;
+              const childClassReturnIsGeneric = childClassMethod.type.isGeneric;
+              const childClassReturnIsComposedType = childClassMethod.type.isComposedType;
 
               if(parentClassReturnIsPromise !== childClassReturnIsPromise) {
                 returnTypeErrors++;

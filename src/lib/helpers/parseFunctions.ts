@@ -6,11 +6,12 @@ import {CodeStatement} from "../classes/CodeStatement.class";
 
 export type FunctionInfo = {
   name: string;
-  parameters: string;
+  parameters: string[];
   returnType: string;
   typeParameters: string[];
   bodyStatements: CodeStatement[];
   tsObject?: ts.FunctionDeclaration;
+  sourceFile: ts.SourceFile;
 }
 
 export const parseFunctions = (sourceFile: ts.SourceFile): FunctionInfo[] => {
@@ -25,20 +26,21 @@ export const parseFunctions = (sourceFile: ts.SourceFile): FunctionInfo[] => {
 
   visit(sourceFile);
   return functions.map((fn: ts.FunctionDeclaration) => {
-    return getFunctionInfo(fn);
+    return getFunctionInfo(fn, sourceFile);
   });
 }
 
-export const getFunctionInfo = (fn: ts.FunctionDeclaration): FunctionInfo => {
+export const getFunctionInfo = (fn: ts.FunctionDeclaration, sourceFile: ts.SourceFile ): FunctionInfo => {
   const fnObj = JSON.parse(safeStringify(fn));
-  let parameters = '';
+
+  let parameters: string[] = [];
   let returnType = '';
   let typeParameters: string[] = [];
   const name = fnObj.name && fnObj.name.escapedText ? fnObj.name.escapedText : 'anonymous';
   if(fnObj.parameters !== undefined) {
     parameters = fnObj.parameters.map((param: any) => {
       return param.name.escapedText;
-    }).join(', ');
+    });
   }
   returnType = fnObj.type ? parseType(fnObj.type) : 'void';
   if(fnObj.typeParameters !== undefined) {
@@ -53,6 +55,6 @@ export const getFunctionInfo = (fn: ts.FunctionDeclaration): FunctionInfo => {
   const statements: CodeStatement[] = parseStatements(fnObj.body.statements);
 
 
-  return { name, parameters, returnType, tsObject: fn, typeParameters, bodyStatements: statements };
+  return { name, parameters, returnType, tsObject: fn, typeParameters, bodyStatements: statements, sourceFile } as FunctionInfo;
   // return { name, parameters, returnType, typeParameters, bodyStatements: statements };
 }
