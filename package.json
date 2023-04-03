@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "debug": "yarn build && ./dist/cli.js",
-    "go": "ts-node ./src/cli.ts"
+    "debugts": "ts-node ./src/cli.ts"
   },
   "bin": {
     "solidLint": "./dist/cli.js"
