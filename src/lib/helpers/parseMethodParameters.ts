@@ -4,8 +4,9 @@ import {Parameter} from "../classes/parameter.class";
 import * as ts from "typescript";
 import {parseModifier} from "./parseModifier";
 import {parseIsInjectedObject} from "./parseIsInjectedObject";
+import {parseGenericTypes} from "./parseGenericTypes";
 
-export const parseMethodParameters = (parameters: any, methodGenericTypes: string[]): Parameter[] => {
+export const parseMethodParameters = (className: string, methodName: string, parameters: any, methodGenericTypes: string[]): Parameter[] => {
   const parsedParameters: Parameter[] = [];
   parameters.forEach((parameter: any) => {
     const param: Parameter = new Parameter();
@@ -28,8 +29,12 @@ export const parseMethodParameters = (parameters: any, methodGenericTypes: strin
       param.isInjectedObject = parseIsInjectedObject(parameter.modifiers);
     }
 
-    if(methodGenericTypes.includes(param.type)) {
+    if(methodGenericTypes.includes(param.type.replace('[]', ''))) {
       param.isGeneric = true;
+    }
+
+    if(parameter.type && parameter.type.kind) {
+      param.isArray = ts.SyntaxKind[parameter.type.kind] === 'ArrayType';
     }
 
     parsedParameters.push(param);

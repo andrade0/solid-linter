@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 import {ClassDeclarationWithSourceFile, debugJson, safeStringify, stringSourceCodeGetUsedVariable} from "../helpers";
 import {parseNameOjbect} from "../helpers/parseNameOjbect";
-import {parseType2} from "../helpers/parseType2";
+import {parseReturnType, parseType2} from "../helpers/parseType2";
 import {InterfaceMethod} from "./interfaceMethod";
 import {parseGenericTypes} from "../helpers/parseGenericTypes";
 import {ClassProperty} from "./classProperty.class";
@@ -16,6 +16,7 @@ import {ClasseMethod} from "./ClasseMethod";
 import {InterfaceClass} from "./interface.class";
 import {variablesNamesOnSwitchOrIf} from "../types/variablesNamesOnSwitchOrIf";
 import {variableNameAndType} from "../types/variableNameAndType";
+import {ClassMethod} from "./classMethod.class";
 
 export class Classse {
   sourceFile: ts.SourceFile;
@@ -73,12 +74,8 @@ export class Classse {
           if (property.modifiers && property.modifiers.length > 0) {
             newProperty.modifiers = parseModifier(property.modifiers);
             newProperty.isInjectedObject = parseIsInjectedObject(property.modifiers);
-          }
-
-          if(this.classesNames.includes(newProperty.type) || this.interfacesNames.includes(newProperty.type)) {
+          } else if(this.classesNames.includes(newProperty.type) || this.interfacesNames.includes(newProperty.type)) {
             newProperty.isInjectedObject = true;
-          } else {
-            newProperty.isInjectedObject = newProperty.isInjectedObject;
           }
 
           properties.push(newProperty);
@@ -86,9 +83,14 @@ export class Classse {
       });
     }
 
-    const propertiesFromConstructor: any = this.methods.find((method: InterfaceMethod) => method.name === "constructor")?.parameters.filter((parameter: any) => parameter.modifiers.length > 0);
+    let constructor: ClasseMethod | undefined = this.methods.find((method: ClasseMethod) => {
+      return method.name === "constructor";
+    });
 
-    // console.log('propertiesFromConstructor', propertiesFromConstructor);
+    let propertiesFromConstructor: Parameter[] = [];
+    if(constructor !== undefined) {
+      propertiesFromConstructor = constructor.parameters.filter((parameter: any) => parameter.modifiers.length > 0);
+    }
 
     if (propertiesFromConstructor && propertiesFromConstructor.length > 0) {
       propertiesFromConstructor.forEach((parameter: Parameter) => {
@@ -154,18 +156,18 @@ export class Classse {
             newMethod.isConstructor = true;
           }
 
-          if (method.type) {
-            newMethod.type = parseType2(method.type);
-          }
-
           if (method.typeParameters) {
             newMethod.genericTypes = parseGenericTypes(method.typeParameters);
           } else {
             newMethod.genericTypes = [];
           }
 
+          if (method.type) {
+            newMethod.type = parseReturnType(this.name, newMethod.name, method.type, [...newMethod.genericTypes, ...this.genericTypes]);
+          }
+
           if (method.parameters) {
-            newMethod.parameters = parseMethodParameters(method.parameters, [...newMethod.genericTypes, ...this.genericTypes]);
+            newMethod.parameters = parseMethodParameters(this.name, newMethod.name, method.parameters, [...newMethod.genericTypes, ...this.genericTypes]);
           }
 
           methods.push(newMethod);
@@ -445,7 +447,7 @@ export class Classse {
         return parameter.name + ': ' + parameter.type;
       }).join(', ')
       signature += ')';
-      if(method.type !== undefined) {
+      if(method.type.toString() !== undefined) {
         signature += ': ' + method.type;
       }
       return signature;

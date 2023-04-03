@@ -51,7 +51,7 @@ export const isp = ({
         }
       });
       if(methodsNotImplemented.length > 0) {
-        log(`Interface "${red(interfaceName)}" breaks ${white('Interface Segregation Principle')} because Class "${red(classThatImplementsThisInterface.name)}" implements "${red(interfaceName)}" but ${blue('do not implements')} the following methods : ${red(methodsNotImplemented.join(', '))} on file ${file(classThatImplementsThisInterface.fileUri)}`);
+        log(`Interface "${red(interfaceName)}" breaks ${white('Interface Segregation Principle')} because Class "${red(classThatImplementsThisInterface.name)}" implements "${red(interfaceName)}" but ${blue('do not implements')} the following methods : ${red(methodsNotImplemented.join(', '))} \n${file('File:')} ${file(classThatImplementsThisInterface.fileUri)}`);
         log('');
         errorsCount++;
       }

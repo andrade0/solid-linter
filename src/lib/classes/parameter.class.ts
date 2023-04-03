@@ -20,6 +20,7 @@ export class Parameter {
   modifiers: string[];
 
   isGeneric: boolean = false;
+  isArray: boolean = false;
 
   decorators: Decorateur[];
 
