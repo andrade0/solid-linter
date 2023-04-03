@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import {ClassDeclarationWithSourceFile, safeStringify} from "../helpers";
+import {ClassDeclarationWithSourceFile, debugJson, safeStringify, stringSourceCodeGetUsedVariable} from "../helpers";
 import {parseNameOjbect} from "../helpers/parseNameOjbect";
 import {parseType2} from "../helpers/parseType2";
 import {InterfaceMethod} from "./interfaceMethod";
@@ -135,13 +135,15 @@ export class Classse {
     if (this.parsedObject.members) {
       this.parsedObject.members.forEach((method: any) => {
 
+
+
         const kind = ts.SyntaxKind[method.kind];
         let initializerKind = undefined;
         if (method.initializer && method.initializer.kind) {
           initializerKind = ts.SyntaxKind[method.initializer.kind];
         }
 
-        if (kind === "Constructor" || kind === "MethodDeclaration" || (kind === "PropertyDeclaration" && (initializerKind === "ArrowFunction" || initializerKind === "FunctionExpression"))) {
+        if (kind === "GetAccessor" || kind === "Constructor" || kind === "MethodDeclaration" || (kind === "PropertyDeclaration" && (initializerKind === "ArrowFunction" || initializerKind === "FunctionExpression"))) {
           const newMethod: ClasseMethod = new ClasseMethod();
           if (method.name !== undefined) {
             newMethod.name = parseNameOjbect(method.name);
@@ -213,18 +215,23 @@ export class Classse {
 
       const sourceFile = ts.createSourceFile('sample.ts', fs.readFileSync(this.fileUri, {encoding: "utf-8"}), ts.ScriptTarget.Latest, true);
 
-      const variablesUsedInSwitchOrIf: variablesNamesOnSwitchOrIf[] = [];
+      let variablesUsedInSwitchOrIf: variablesNamesOnSwitchOrIf[] = this.findTestedVariableInIfElseOrSwitch(sourceFile, this.name, methodName);
 
-      const switchStatements = this.findSwitchStatements(sourceFile, this.name, methodName);
+      /*const switchStatements = this.findSwitchStatements(sourceFile, this.name, methodName);
       switchStatements.forEach((switchStatement: ts.SwitchStatement) => {
         const testedVariable = switchStatement.expression;
         variablesUsedInSwitchOrIf.push({variableName: testedVariable.getText(), ifOrSwitch: 'SWITCH'});
-      });
+      });*/
 
-      const testedVariables = this.findTestedVariableInIfElse(sourceFile, this.name, methodName);
-      testedVariables.forEach((variable: ts.Identifier) => {
-        variablesUsedInSwitchOrIf.push({variableName: variable.text, ifOrSwitch: 'IF'});
-      });
+      /*const testedVariables = this.findTestedVariableInIfElseOrSwitch(sourceFile, this.name, methodName);
+      testedVariables.forEach((variable: any) => {
+        if(variable !== undefined && variable.text !== undefined) {
+          variablesUsedInSwitchOrIf.push({variableName: variable.text, ifOrSwitch: 'IF'});
+        } else if(variable !== undefined) {
+          variablesUsedInSwitchOrIf.push({variableName: variable, ifOrSwitch: 'IF'});
+        }
+      });*/
+
       return variablesUsedInSwitchOrIf.filter((item: variablesNamesOnSwitchOrIf) => candidateVariables.includes(item.variableName));
     }
     return [];
@@ -354,24 +361,28 @@ export class Classse {
     return switchStatements;
   }
 
-  findTestedVariableInIfElse(
+  findTestedVariableInIfElseOrSwitch(
     sourceFile: ts.SourceFile,
     className: string,
     methodName: string
-  ): ts.Identifier[] {
-    const testedVariables: ts.Identifier[] = [];
+  ): variablesNamesOnSwitchOrIf[] {
+    let testedVariables: variablesNamesOnSwitchOrIf[] = [];
 
     function visit(node: ts.Node) {
       if (ts.isClassDeclaration(node) && node.name?.text === className) {
         for (const member of node.members) {
-          if (ts.isMethodDeclaration(member) && (member.name as ts.Identifier).text === methodName) {
-            if(member.body !== undefined) {
+          if ((ts.isMethodDeclaration(member) || ts.isAccessor(member) || ts.isConstructorDeclaration(member)) && (member.name !== undefined && (member.name as ts.Identifier).text === methodName || methodName === 'constructor')) {
+            if(member.body !== undefined && ( (member.name?.getText() === methodName) || (methodName === 'constructor' && ts.SyntaxKind[member.kind] === 'Constructor') )) {
               ts.forEachChild(member.body, function visitMethodChild(methodChildNode: ts.Node) {
-                if (ts.isIfStatement(methodChildNode)) {
+                if (ts.isIfStatement(methodChildNode) || ts.isSwitchStatement(methodChildNode)) {
                   const expression = methodChildNode.expression;
-                  if (ts.isIdentifier(expression)) {
-                    testedVariables.push(expression);
+                  let statementType: 'IF' | 'SWITCH' = 'IF';
+                  if(ts.isIfStatement(methodChildNode)) {
+                    statementType = 'IF';
+                  } else if(ts.isSwitchStatement(methodChildNode)) {
+                    statementType = 'SWITCH';
                   }
+                  testedVariables = [...testedVariables, ...stringSourceCodeGetUsedVariable(statementType, expression.getText())];
                 }
                 ts.forEachChild(methodChildNode, visitMethodChild);
               });

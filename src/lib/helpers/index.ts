@@ -8,4 +8,5 @@ export * from './typescriptOjectGetName';
 export * from './safeStringify';
 export * from './typescriptApiObjectReplaceKinds';
 export * from './debugJson';
+export * from './stringSourceCodeGetUsedVariable';
 

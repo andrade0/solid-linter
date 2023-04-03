@@ -1,4 +1,4 @@
 export type variablesNamesOnSwitchOrIf = {
-  variableName: string;
+  variableName: any;
   ifOrSwitch: 'IF' | 'SWITCH';
 }
