@@ -4,7 +4,7 @@
   "function": "solidLint",
   "homepage": "www.npmjs.com/package/ts-solid-linter",
   "author": "Olivier Andrade <andradeolivier@gmail.com>",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Code quality tool for Solid Principles in Typescript",
   "main": "./dist/cli.ts",
   "scripts": {
