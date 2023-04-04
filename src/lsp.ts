@@ -144,7 +144,7 @@ export const lsp = ({
 
             if(errors.length > 0) {
 
-              const errorToshow = `\nMethod "${red(childClassMethodName)}" of Class "${green(childClass.name)}" breaks ${white('Liskov Substitution Principle')} because her ${blue('signature')} is different than method "${red(parentClassMethod.name)}" on parent class "${red(parentClassName)}": ${errors.map(err => '\n  - '+err).join('')} \n${file('File:')} ${file(childClass.fileUri)}`;
+              const errorToshow = `\nMethod "${red(childClassMethodName)}" of Class "${green(childClass.name)}" breaks ${white('Liskov Substitution Principle')} because her ${blue('signature')} is different than method "${red(parentClassMethod.name)}" on parent class "${red(parentClassName)}": ${errors.map(err => '\n  - '+err).join('')}\n${file('File:')} ${file(childClass.fileUri)}`;
               if(!errorsShown.includes(errorToshow)) {
                 log(errorToshow);
                 log('');

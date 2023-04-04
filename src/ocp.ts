@@ -34,7 +34,7 @@ export const ocp = ({
       const methodParametersOrClassProperty: variablesNamesOnSwitchOrIf[] = _class.methodParametersOrClassPropertiesUsedInSwitchOrIfStatement(method.name); // OCP
       if(methodParametersOrClassProperty.length > 0) {
         methodParametersOrClassProperty.forEach((parameterOrClassProperty: variablesNamesOnSwitchOrIf) => {
-          const errorToshow = `${method.isConstructor ? 'Constructor' : ('Method "' + red(method.name) + '"')} of Class "${red(_class.name)}" ${yellow('may')} break ${white('open/close principle')} because a "${red(parameterOrClassProperty.ifOrSwitch)}" statement has been found with variable "${red(parameterOrClassProperty.variableName)}" \n${file('File:')} ${file(_class.fileUri)}`;
+          const errorToshow = `${method.isConstructor ? 'Constructor' : ('Method "' + red(method.name) + '"')} of Class "${red(_class.name)}" ${yellow('may')} break ${white('open/close principle')} because a "${red(parameterOrClassProperty.ifOrSwitch)}" statement has been found with variable "${red(parameterOrClassProperty.variableName)}"\n${file('File:')} ${file(_class.fileUri)}`;
           if(!errorsShown.includes(errorToshow)) {
             log(errorToshow);log('');
             errorsShown.push(errorToshow);

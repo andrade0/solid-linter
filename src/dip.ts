@@ -53,7 +53,7 @@ export const dip = ({
 
       _class.injecteds.forEach((dependency: string) => {
         if(stringClassNames.includes(dependency) && !stringInterfaceNames.includes(dependency)) {
-          const errorToshow = `Class "${red(_class.name)}" breaks ${white('dependencies inversion Principle')} because class has injection of a ${blue('non abstract dependency')}: ${red(dependency)} \n${file('File:')} ${file(_class.fileUri)}`;
+          const errorToshow = `Class "${red(_class.name)}" breaks ${white('dependencies inversion Principle')} because class has injection of a ${blue('non abstract dependency')}: ${red(dependency)}\n${file('File:')} ${file(_class.fileUri)}`;
           if(!errorsShown.includes(errorToshow)) {
             log(errorToshow);
             log('');
