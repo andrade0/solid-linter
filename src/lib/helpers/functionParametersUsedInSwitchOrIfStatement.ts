@@ -30,7 +30,9 @@ export const findTestedVariableInIfElseOrSwitch = (
             } else if(ts.isSwitchStatement(methodChildNode)) {
               statementType = 'SWITCH';
             }
-            testedVariables = [...testedVariables, ...stringSourceCodeGetUsedVariable(statementType, expression.getText())];
+            if(expression !== undefined && expression.getText() !== undefined){
+              testedVariables = [...testedVariables, ...stringSourceCodeGetUsedVariable(statementType, expression.getText())];
+            }
           }
           ts.forEachChild(methodChildNode, visitMethodChild);
         });
